@@ -1507,18 +1507,18 @@
         // ============================================
         // AUTO OPEN ENQUIRY EVERY 20 SECONDS
         // ============================================
-        function startAutoOpen() {
-            if (autoOpenTimer) {
-                clearInterval(autoOpenTimer);
-                autoOpenTimer = null;
-            }
-            autoOpenTimer = setInterval(() => {
-                if (!isPopupOpen && !popup.classList.contains('active')) {
-                    openPopup();
-                }
-            }, 20000);
-        }
-        startAutoOpen();
+        // function startAutoOpen() {
+        //     if (autoOpenTimer) {
+        //         clearInterval(autoOpenTimer);
+        //         autoOpenTimer = null;
+        //     }
+        //     autoOpenTimer = setInterval(() => {
+        //         if (!isPopupOpen && !popup.classList.contains('active')) {
+        //             openPopup();
+        //         }
+        //     }, 20000);
+        // }
+        // startAutoOpen();
 
         // ============================================
         // SCROLL REVEALS & MICRO-INTERACTIONS
