@@ -8,37 +8,24 @@
     <meta name="keywords" content="website design, app design, digital marketing, SEO, interior design, printing services, Delhi, India" />
     <meta name="author" content="Gobizness Rocket" />
     <meta name="robots" content="index, follow" />
-
-    <!-- Open Graph / Social Media -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="www.gobiznessrocket.co.in" />
     <meta property="og:title" content="Gobizness Rocket | Complete Design & Marketing Solutions" />
     <meta property="og:description" content="Website Design, App Design, Digital Marketing, SEO, Interior Design & Printing Services in Delhi" />
     <meta property="og:image" content="https://www.gobiznessrocket.co.in/assets/og-image.jpg" />
-
-    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Gobizness Rocket" />
     <meta name="twitter:description" content="Complete Design & Marketing Solutions in Delhi" />
-
-    <!-- Canonical URL -->
     <link rel="canonical" href="http://gobiznessrocket.com" />
-
-    <!-- Favicon -->
     <link rel="icon" type="image/png" href="/assets/favicon.png" />
     <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
-
-    <!-- Preconnect -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
-
-    <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="./css/main.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-    <!-- <style>
+    <style>
         /* ============================================
            GLOBAL RESET & ROOT VARIABLES (logo-inspired)
            ============================================ */
@@ -811,26 +798,159 @@
             outline: 2px solid var(--accent);
             outline-offset: 2px;
         }
-    </style> -->
+
+        /* ============================================
+           ADDED: HERO SLIDER STYLES
+           ============================================ */
+        .hero-slider {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            aspect-ratio: 4 / 3;
+            background: var(--secondary);
+        }
+        .hero-slider .slides {
+            display: flex;
+            transition: transform 0.8s ease-in-out;
+            height: 100%;
+            width: 100%;
+        }
+        .hero-slider .slide {
+            min-width: 100%;
+            height: 100%;
+            flex-shrink: 0;
+        }
+        .hero-slider .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .hero-slider .slider-dots {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 5;
+            background: rgba(0,0,0,0.3);
+            padding: 6px 14px;
+            border-radius: 30px;
+            backdrop-filter: blur(4px);
+        }
+        .hero-slider .slider-dots .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .hero-slider .slider-dots .dot.active {
+            background: var(--accent);
+            transform: scale(1.3);
+        }
+        .hero-slider .slider-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.4);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 5;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .hero-slider .slider-btn:hover { background: var(--accent); color: var(--primary); }
+        .hero-slider .slider-btn.prev { left: 10px; }
+        .hero-slider .slider-btn.next { right: 10px; }
+
+        /* hide hero float cards when slider is active */
+        .hero-slider-wrapper .hero-float-card { display: none; }
+        /* adjust hero visual to fit slider */
+        .hero-visual .hero-image-wrapper {
+            max-width: 600px;
+            width: 100%;
+        }
+        .hero-visual .hero-image-wrapper .hero-main-image {
+            display: none;
+        }
+        .hero-visual .hero-image-wrapper .hero-slider {
+            display: block;
+        }
+
+        @media (max-width: 1024px) {
+            .hero-visual { display: flex; justify-content: center; width: 100%; }
+            .hero-slider { max-width: 500px; }
+        }
+        @media (max-width: 600px) {
+            .hero-slider { max-width: 100%; aspect-ratio: 4/3; }
+            .hero-slider .slider-btn { width: 32px; height: 32px; font-size: 14px; }
+        }
+    </style>
+    <link rel="stylesheet" href="./css/premium.css">
 </head>
 <body>
-    <!-- Navigation -->
+    <a class="skip-link" href="#mainContent">Skip to content</a>
+    <div class="scroll-progress" aria-hidden="true"><span id="scrollProgressBar"></span></div>
+
+    <!-- Announcement + Navigation -->
+    <div class="announcement-bar" role="banner">
+        <div class="announcement-inner">
+            <p><i class="fas fa-sparkles" aria-hidden="true"></i><span>Ideas that look exceptional. Growth that performs.</span></p>
+            <div class="announcement-actions">
+                <a href="tel:+919266041927"><i class="fas fa-phone-alt" aria-hidden="true"></i> +91 92660 41927</a>
+                <span class="announcement-proof"><i class="fas fa-shield-halved" aria-hidden="true"></i> 500+ projects delivered</span>
+            </div>
+        </div>
+    </div>
     <nav class="navbar" id="navbar">
         <div class="nav-container">
             <a href="#home" class="logo" data-action="home">
                 <div class="logo-icon"><img src="./images/logo.jpeg" alt="Gobizness Rocket logo"></div>
                 <div class="logo-text">Gobizness<span style="color: rgb(7, 77, 215);">Rocket</span></div>
             </a>
-            <ul class="nav-links" id="navLinks">
+            <ul class="nav-links" id="navLinks" aria-label="Primary navigation">
                 <li><a href="#home" class="active">Home</a></li>
-                <li><a href="#services">Services</a></li>
+                <li class="nav-dropdown">
+                    <div class="nav-item-with-submenu">
+                        <a href="#services" class="nav-menu-link">Services</a>
+                        <button class="nav-submenu-trigger" type="button" aria-expanded="false" aria-controls="servicesMenu" aria-label="Show services menu"><i class="fas fa-chevron-down" aria-hidden="true"></i></button>
+                    </div>
+                    <div class="mega-menu" id="servicesMenu">
+                        <div class="mega-menu-intro">
+                            <span>Explore our expertise</span>
+                            <p>One multidisciplinary team for every important brand touchpoint.</p>
+                        </div>
+                        <div class="mega-menu-grid">
+                            <a href="#services" class="mega-menu-link"><i class="fas fa-laptop-code mega-menu-icon web" aria-hidden="true"></i><span><strong>Website Design</strong><small>Conversion-ready digital experiences</small></span></a>
+                            <a href="#services" class="mega-menu-link"><i class="fas fa-mobile-screen-button mega-menu-icon app" aria-hidden="true"></i><span><strong>App Design</strong><small>Useful interfaces people enjoy</small></span></a>
+                            <a href="#services" class="mega-menu-link"><i class="fas fa-bullhorn mega-menu-icon marketing" aria-hidden="true"></i><span><strong>Digital Marketing</strong><small>Campaigns built for momentum</small></span></a>
+                            <a href="#services" class="mega-menu-link"><i class="fas fa-chart-line mega-menu-icon seo" aria-hidden="true"></i><span><strong>SEO Services</strong><small>Long-term organic visibility</small></span></a>
+                            <a href="#services" class="mega-menu-link"><i class="fas fa-couch mega-menu-icon interior" aria-hidden="true"></i><span><strong>Interior Design</strong><small>Spaces with a distinctive point of view</small></span></a>
+                            <a href="#services" class="mega-menu-link"><i class="fas fa-print mega-menu-icon print" aria-hidden="true"></i><span><strong>Printing</strong><small>Premium detail you can hold</small></span></a>
+                        </div>
+                    </div>
+                </li>
                 <li><a href="#portfolio">Portfolio</a></li>
                 <li><a href="#testimonials">Testimonials</a></li>
                 <li><a href="#blog">Blog</a></li>
                 <li><a href="#contact">Contact</a></li>
                 <li><a href="#contact" class="nav-cta js-open-enquiry">Get Quote</a></li>
             </ul>
-            <button class="mobile-menu-btn" id="mobileMenuButton" type="button" aria-label="Toggle menu">
+            <button class="mobile-menu-btn" id="mobileMenuButton" type="button" aria-label="Toggle menu" aria-expanded="false" aria-controls="navLinks">
                 <i class="fas fa-bars"></i>
             </button>
         </div>
@@ -843,6 +963,7 @@
             <div class="hero-particles" id="particles"></div>
             <div class="hero-container">
                 <div class="hero-content">
+                    <span class="hero-eyebrow"><i class="fas fa-wand-magic-sparkles" aria-hidden="true"></i> Strategy, design &amp; growth</span>
                     <h1>Transform Your <span>Digital Presence</span></h1>
                     <p>We craft stunning websites, powerful apps, and result-driven marketing strategies that elevate your brand and drive real business growth.</p>
                     <div class="hero-buttons">
@@ -850,26 +971,29 @@
                         <a href="#portfolio" class="btn-outline"><i class="fas fa-play"></i> View Work</a>
                     </div>
                     <div class="hero-stats">
-                        <div class="stat-item"><h3>500+</h3><p>Projects Completed</p></div>
-                        <div class="stat-item"><h3>98%</h3><p>Client Satisfaction</p></div>
-                        <div class="stat-item"><h3>10+</h3><p>Years Experience</p></div>
+                        <div class="stat-item"><h3 data-count="500" data-suffix="+">500+</h3><p>Projects Completed</p></div>
+                        <div class="stat-item"><h3 data-count="98" data-suffix="%">98%</h3><p>Client Satisfaction</p></div>
+                        <div class="stat-item"><h3 data-count="10" data-suffix="+">10+</h3><p>Years Experience</p></div>
                     </div>
                 </div>
                 <div class="hero-visual">
                     <div class="hero-image-wrapper">
-                        <div class="hero-main-image">
-                            <div style="text-align: center; color: var(--primary); z-index: 2; position: relative;">
-                                <i class="fas fa-rocket" style="font-size: 72px; margin-bottom: 16px; opacity: 0.9;"></i>
-                                <h3 style="font-size: 28px; margin-bottom: 8px; font-weight: 700;">Creative Excellence</h3>
-                                <p style="opacity: 0.8; font-weight: 500;">Design &bull; Develop &bull; Deliver</p>
+                        <!-- HERO SLIDER (replaces hero-main-image) -->
+                        <div class="hero-slider" id="heroSlider">
+                            <div class="slides" id="heroSlides">
+                                <!-- slides injected via JS -->
                             </div>
+                            <button class="slider-btn prev" id="heroPrev" aria-label="Previous slide"><i class="fas fa-chevron-left"></i></button>
+                            <button class="slider-btn next" id="heroNext" aria-label="Next slide"><i class="fas fa-chevron-right"></i></button>
+                            <div class="slider-dots" id="heroDots"></div>
                         </div>
-                        <div class="hero-float-card card-1">
+                        <!-- Float cards removed (hidden via CSS) -->
+                        <div class="hero-float-card card-1" style="display:none;">
                             <div class="float-card-icon purple"><i class="fas fa-check"></i></div>
                             <div class="float-card-text">Project Delivered</div>
                             <div class="float-card-sub">Just now</div>
                         </div>
-                        <div class="hero-float-card card-2">
+                        <div class="hero-float-card card-2" style="display:none;">
                             <div class="float-card-icon orange"><i class="fas fa-star"></i></div>
                             <div class="float-card-text">5 Star Rating</div>
                             <div class="float-card-sub">From Client</div>
@@ -1117,17 +1241,14 @@
 
     <!-- Floating Action Group: Call, WhatsApp, Enquiry -->
     <div class="floating-group">
-        <!-- Call Button -->
         <a href="tel:+919266041927" class="floating-btn btn-call" aria-label="Call us">
             <i class="fas fa-phone-alt"></i>
             <span class="tooltip">Call Now</span>
         </a>
-        <!-- WhatsApp Button -->
         <a href="https://wa.me/919266041927?text=Hi%20Gobizness%20Rocket%2C%20I%20would%20like%20to%20know%20more%20about%20your%20services." target="_blank" rel="noopener noreferrer" class="floating-btn btn-whatsapp" aria-label="WhatsApp us">
             <i class="fab fa-whatsapp"></i>
             <span class="tooltip">WhatsApp</span>
         </a>
-        <!-- Enquiry Button (existing) -->
         <button class="floating-btn btn-enquiry js-open-enquiry" type="button" aria-label="Get a Quote">
             <i class="fas fa-comment-dots"></i>
             <span class="tooltip">Enquiry</span>
@@ -1144,20 +1265,91 @@
         const navbar = document.getElementById('navbar');
         const mobileMenuBtn = document.getElementById('mobileMenuButton');
         const navLinks = document.getElementById('navLinks');
+        const navSubmenuTriggers = document.querySelectorAll('.nav-submenu-trigger');
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        let lastScrollY = window.scrollY;
+        let scrollTicking = false;
+
+        function updateNavigation() {
+            const currentScrollY = window.scrollY;
+            navbar.classList.toggle('scrolled', currentScrollY > 24);
+            navbar.classList.toggle('nav-hidden', currentScrollY > lastScrollY && currentScrollY > 180);
+            lastScrollY = currentScrollY;
+
+            const progress = document.getElementById('scrollProgressBar');
+            const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+            if (progress) progress.style.width = `${maxScroll > 0 ? (currentScrollY / maxScroll) * 100 : 0}%`;
+            scrollTicking = false;
+        }
 
         window.addEventListener('scroll', () => {
-            navbar.classList.toggle('scrolled', window.scrollY > 50);
-        });
+            if (!scrollTicking) {
+                window.requestAnimationFrame(updateNavigation);
+                scrollTicking = true;
+            }
+        }, { passive: true });
+        updateNavigation();
 
         mobileMenuBtn.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
+            const isOpen = navLinks.classList.toggle('active');
+            mobileMenuBtn.setAttribute('aria-expanded', String(isOpen));
+            mobileMenuBtn.querySelector('i').className = isOpen ? 'fas fa-times' : 'fas fa-bars';
         });
 
         document.querySelectorAll('.nav-links a').forEach(link => {
             link.addEventListener('click', () => {
                 navLinks.classList.remove('active');
+                mobileMenuBtn.setAttribute('aria-expanded', 'false');
+                mobileMenuBtn.querySelector('i').className = 'fas fa-bars';
             });
         });
+
+        navSubmenuTriggers.forEach(trigger => {
+            trigger.addEventListener('click', (event) => {
+                event.preventDefault();
+                const dropdown = trigger.closest('.nav-dropdown');
+                const willOpen = !dropdown.classList.contains('is-open');
+                navSubmenuTriggers.forEach(otherTrigger => {
+                    otherTrigger.closest('.nav-dropdown').classList.remove('is-open');
+                    otherTrigger.setAttribute('aria-expanded', 'false');
+                });
+                dropdown.classList.toggle('is-open', willOpen);
+                trigger.setAttribute('aria-expanded', String(willOpen));
+            });
+        });
+
+        document.addEventListener('click', (event) => {
+            if (!event.target.closest('.nav-dropdown')) {
+                navSubmenuTriggers.forEach(trigger => {
+                    trigger.closest('.nav-dropdown').classList.remove('is-open');
+                    trigger.setAttribute('aria-expanded', 'false');
+                });
+            }
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key !== 'Escape') return;
+            navLinks.classList.remove('active');
+            mobileMenuBtn.setAttribute('aria-expanded', 'false');
+            mobileMenuBtn.querySelector('i').className = 'fas fa-bars';
+            navSubmenuTriggers.forEach(trigger => {
+                trigger.closest('.nav-dropdown').classList.remove('is-open');
+                trigger.setAttribute('aria-expanded', 'false');
+            });
+        });
+
+        const primaryNavLinks = Array.from(document.querySelectorAll('#navLinks > li > a[href^="#"], #navLinks .nav-menu-link'));
+        if ('IntersectionObserver' in window) {
+            const navigationSpy = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) return;
+                    primaryNavLinks.forEach(link => {
+                        link.classList.toggle('active', link.getAttribute('href') === `#${entry.target.id}`);
+                    });
+                });
+            }, { rootMargin: '-35% 0px -57% 0px', threshold: 0 });
+            document.querySelectorAll('#mainContent > section[id]').forEach(section => navigationSpy.observe(section));
+        }
 
         // ============================================
         // PORTFOLIO
@@ -1193,6 +1385,7 @@
                 filterBtns.forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
                 renderPortfolio(btn.dataset.filter);
+                window.requestAnimationFrame(refreshRevealAnimations);
             });
         });
         renderPortfolio('all');
@@ -1315,42 +1508,193 @@
         // AUTO OPEN ENQUIRY EVERY 20 SECONDS
         // ============================================
         function startAutoOpen() {
-            // Clear any existing timer to avoid duplicates
             if (autoOpenTimer) {
                 clearInterval(autoOpenTimer);
                 autoOpenTimer = null;
             }
             autoOpenTimer = setInterval(() => {
-                // Only open if popup is not already active and user is not interacting with form
                 if (!isPopupOpen && !popup.classList.contains('active')) {
                     openPopup();
                 }
-            }, 20000); // 20 seconds
+            }, 20000);
         }
-
-        // Start auto-open on page load
         startAutoOpen();
 
-        // Optional: stop auto-open when user manually opens/closes popup to avoid annoyance?
-        // We'll keep it running, but we check isPopupOpen state.
-        // Also stop if user submits form (already closes).
-        // We can also stop if user closes popup manually, but we keep it running.
-
-        // For better UX, we can reset timer when user interacts (optional)
-        // but we keep it simple per request.
-
         // ============================================
-        // SCROLL ANIMATIONS (fade-in)
+        // SCROLL REVEALS & MICRO-INTERACTIONS
         // ============================================
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
+        const revealSelector = [
+            '.section-header', '.portfolio-filter', '.service-card', '.portfolio-item',
+            '.testimonial-card', '.blog-card', '.cta-content', '.footer-column', '.footer-brand'
+        ].join(', ');
+
+        const revealObserver = !reduceMotion && 'IntersectionObserver' in window
+            ? new IntersectionObserver((entries, currentObserver) => {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) return;
+                    entry.target.classList.add('revealed', 'visible');
+                    currentObserver.unobserve(entry.target);
+                });
+            }, { threshold: 0.12, rootMargin: '0px 0px -32px' })
+            : null;
+
+        function refreshRevealAnimations() {
+            let staggerIndex = 0;
+            document.querySelectorAll(revealSelector).forEach(element => {
+                if (element.classList.contains('reveal-ready') || element.classList.contains('revealed')) return;
+                element.classList.add('reveal-ready');
+                element.style.setProperty('--reveal-delay', `${(staggerIndex % 4) * 70}ms`);
+                staggerIndex += 1;
+                if (revealObserver) revealObserver.observe(element);
+                else element.classList.add('revealed', 'visible');
             });
-        }, { threshold: 0.15 });
 
-        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+            document.querySelectorAll('.fade-in:not(.visible)').forEach(element => {
+                if (!revealObserver) element.classList.add('visible');
+            });
+        }
+
+        const counterObserver = !reduceMotion && 'IntersectionObserver' in window
+            ? new IntersectionObserver((entries, currentObserver) => {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) return;
+                    animateCounter(entry.target);
+                    currentObserver.unobserve(entry.target);
+                });
+            }, { threshold: 0.75 })
+            : null;
+
+        function animateCounter(counter) {
+            const target = Number(counter.dataset.count || 0);
+            const suffix = counter.dataset.suffix || '';
+            if (!target || reduceMotion) {
+                counter.textContent = `${target}${suffix}`;
+                return;
+            }
+            const startedAt = performance.now();
+            const duration = 1050;
+            const tick = now => {
+                const progress = Math.min((now - startedAt) / duration, 1);
+                const eased = 1 - Math.pow(1 - progress, 3);
+                counter.textContent = `${Math.round(target * eased)}${suffix}`;
+                if (progress < 1) window.requestAnimationFrame(tick);
+            };
+            window.requestAnimationFrame(tick);
+        }
+
+        document.querySelectorAll('[data-count]').forEach(counter => {
+            if (counterObserver) counterObserver.observe(counter);
+            else animateCounter(counter);
+        });
+
+        refreshRevealAnimations();
+        window.requestAnimationFrame(() => document.body.classList.add('motion-ready'));
+
+        const heroVisual = document.querySelector('.hero-visual');
+        if (heroVisual && !reduceMotion && window.matchMedia('(min-width: 901px)').matches) {
+            let pointerFrame = null;
+            window.addEventListener('pointermove', event => {
+                if (pointerFrame) return;
+                pointerFrame = window.requestAnimationFrame(() => {
+                    const x = (event.clientX / window.innerWidth - 0.5) * 10;
+                    const y = (event.clientY / window.innerHeight - 0.5) * 10;
+                    heroVisual.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+                    pointerFrame = null;
+                });
+            }, { passive: true });
+        }
+
+        // ============================================
+        // HERO SLIDER (random images from online)
+        // ============================================
+        (function initHeroSlider() {
+            const sliderImages = [
+                'https://images.unsplash.com/photo-1547658719-da2b51169166?w=800&q=80',
+                'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800&q=80',
+                'https://images.unsplash.com/photo-1432889821006-c9b1e4b7cc0e?w=800&q=80',
+                'https://images.unsplash.com/photo-1571171637578-41bc2dd41cd2?w=800&q=80',
+                'https://images.unsplash.com/photo-1618220179428-22790b461013?w=800&q=80',
+                'https://images.unsplash.com/photo-1522542550221-31fd19575a2d?w=800&q=80',
+                'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&q=80',
+                'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80'
+            ];
+
+            // Shuffle array
+            function shuffle(arr) {
+                for (let i = arr.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [arr[i], arr[j]] = [arr[j], arr[i]];
+                }
+                return arr;
+            }
+
+            const shuffled = shuffle([...sliderImages]);
+            // pick first 4 for slides
+            const slides = shuffled.slice(0, 4);
+
+            const slidesContainer = document.getElementById('heroSlides');
+            const dotsContainer = document.getElementById('heroDots');
+            const prevBtn = document.getElementById('heroPrev');
+            const nextBtn = document.getElementById('heroNext');
+
+            let currentIndex = 0;
+            let autoSlideInterval = null;
+
+            function renderSlides() {
+                slidesContainer.innerHTML = slides.map(src => `
+                    <div class="slide">
+                        <img src="${src}" alt="Slide" loading="lazy">
+                    </div>
+                `).join('');
+
+                dotsContainer.innerHTML = slides.map((_, i) => `
+                    <span class="dot ${i === 0 ? 'active' : ''}" data-index="${i}"></span>
+                `).join('');
+
+                // dot click
+                dotsContainer.querySelectorAll('.dot').forEach(dot => {
+                    dot.addEventListener('click', function() {
+                        const idx = parseInt(this.dataset.index);
+                        goToSlide(idx);
+                        resetAutoSlide();
+                    });
+                });
+            }
+
+            function goToSlide(index) {
+                if (index < 0) index = slides.length - 1;
+                if (index >= slides.length) index = 0;
+                currentIndex = index;
+                slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+                // update dots
+                dotsContainer.querySelectorAll('.dot').forEach((dot, i) => {
+                    dot.classList.toggle('active', i === currentIndex);
+                });
+            }
+
+            function nextSlide() { goToSlide(currentIndex + 1); }
+            function prevSlide() { goToSlide(currentIndex - 1); }
+
+            function resetAutoSlide() {
+                if (autoSlideInterval) {
+                    clearInterval(autoSlideInterval);
+                    autoSlideInterval = null;
+                }
+                autoSlideInterval = setInterval(() => {
+                    nextSlide();
+                }, 4000);
+            }
+
+            // events
+            prevBtn.addEventListener('click', () => { prevSlide(); resetAutoSlide(); });
+            nextBtn.addEventListener('click', () => { nextSlide(); resetAutoSlide(); });
+
+            // init
+            renderSlides();
+            resetAutoSlide();
+
+            // cleanup on page hide? keep it simple
+        })();
     </script>
 </body>
 </html>
