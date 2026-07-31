@@ -1,5 +1,5 @@
-const CACHE_NAME = 'topdesign-static-v1';
-const APP_SHELL = ['/', '/css/main.min.css', '/js/main.min.js'];
+const CACHE_NAME = 'gobizness-static-v2';
+const APP_SHELL = ['/', '/css/hero-animation.css', '/js/site.js', '/js/hero-animation.js'];
 
 self.addEventListener('install', event => {
     event.waitUntil(
