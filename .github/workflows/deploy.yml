@@ -39,8 +39,12 @@ jobs:
           name: build-files
           path: |
             public/
+            api/
+            lib/
             server.js
             package.json
+            package-lock.json
+            vercel.json
             ecosystem.config.js
             Dockerfile
             docker-compose.yml

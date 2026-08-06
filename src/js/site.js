@@ -153,13 +153,35 @@
     document.querySelectorAll('.js-open-enquiry').forEach(button => button.addEventListener('click', openPopup));
     document.getElementById('closeEnquiryButton')?.addEventListener('click', closePopup);
     popup?.addEventListener('click', event => { if (event.target === popup) closePopup(); });
-    form?.addEventListener('submit', event => {
+    form?.addEventListener('submit', async event => {
       event.preventDefault();
-      if (toastMessage) toastMessage.textContent = "Enquiry sent successfully! We'll contact you soon.";
-      toast?.classList.add('show');
-      window.setTimeout(() => toast?.classList.remove('show'), 4000);
-      closePopup();
-      form.reset();
+      const submitButton = form.querySelector('button[type="submit"]');
+      if (submitButton) submitButton.disabled = true;
+
+      try {
+        const response = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(Object.fromEntries(new FormData(form)))
+        });
+        const result = await response.json().catch(() => ({}));
+
+        if (!response.ok) {
+          throw new Error(result.error || 'We could not send your enquiry. Please try again.');
+        }
+
+        if (toastMessage) toastMessage.textContent = "Enquiry sent successfully! We'll contact you soon.";
+        toast?.classList.add('show');
+        window.setTimeout(() => toast?.classList.remove('show'), 4000);
+        closePopup();
+        form.reset();
+      } catch (error) {
+        if (toastMessage) toastMessage.textContent = error.message || 'We could not send your enquiry. Please try again.';
+        toast?.classList.add('show');
+        window.setTimeout(() => toast?.classList.remove('show'), 5000);
+      } finally {
+        if (submitButton) submitButton.disabled = false;
+      }
     });
     document.addEventListener('keydown', event => {
       if (event.key !== 'Escape') return;

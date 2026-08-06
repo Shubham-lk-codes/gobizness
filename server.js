@@ -161,11 +161,38 @@ app.post('/api/contact', contactLimiter, async (req, res) => {
         try {
             await sendEnquiryEmail(enquiry);
         } catch (error) {
-            console.error('Enquiry email delivery failed:', error.code || error.message);
-            const status = error.code === 'SMTP_NOT_CONFIGURED' ? 503 : 502;
-            return res.status(status).json({
-                error: 'We could not send your enquiry right now. Please try again or contact us by phone.'
+            console.error('[contact] enquiry email delivery failed', {
+                enquiryId: enquiry.id,
+                code: error.code,
+                stage: error.mailStage,
+                smtpCode: error.smtpCode,
+                responseCode: error.responseCode,
+                smtpResponse: error.smtpResponse,
+                command: error.command,
+                diagnostics: error.diagnostics,
+                message: error.message
             });
+            const status = error.code === 'SMTP_NOT_CONFIGURED' ? 503 : 502;
+            const response = {
+                error: 'We could not send your enquiry right now. Please try again or contact us by phone.',
+                referenceId: enquiry.id
+            };
+
+            // Local development can show the exact safe SMTP failure details in
+            // the network response. Production keeps them in provider logs.
+            if (NODE_ENV !== 'production') {
+                response.debug = {
+                    code: error.code,
+                    stage: error.mailStage,
+                    smtpCode: error.smtpCode,
+                    responseCode: error.responseCode,
+                    smtpResponse: error.smtpResponse,
+                    diagnostics: error.diagnostics,
+                    message: error.message
+                };
+            }
+
+            return res.status(status).json(response);
         }
 
         // Vercel Functions have a read-only project filesystem. Locally, keep
