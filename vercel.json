@@ -3,6 +3,10 @@
   "framework": "express",
   "rewrites": [
     {
+      "source": "/api/:path*",
+      "destination": "/api/index.js"
+    },
+    {
       "source": "/admin/:path*",
       "destination": "/index.html"
     },
