@@ -39,10 +39,28 @@ app.use(helmet({
             workerSrc: ["'self'"],
             fontSrc: ["'self'", "https://fonts.gstatic.com", "https://cdnjs.cloudflare.com"],
             imgSrc: ["'self'", "data:", "https:", "blob:"],
-            // Allow same-origin fetch calls (contact form) plus all configured
-            // production domains so the browser never blocks /api/contact.
-            connectSrc: ["'self'", "https://gobiznessrocket.com", "https://www.gobiznessrocket.com", "https://gobiznessrocket.co.in", "https://www.gobiznessrocket.co.in"],
+            // 'self' covers same-origin fetch() calls in production (HTTPS).
+            // In development the page is served over HTTP, so 'self' resolves to
+            // http://localhost:3000 — but helmet also injects upgrade-insecure-requests
+            // which causes some browsers to upgrade the fetch to HTTPS, then fail.
+            // Listing the localhost origins explicitly avoids this CSP block.
+            connectSrc: [
+                "'self'",
+                "http://localhost:3000",
+                "http://localhost:5500",
+                "http://127.0.0.1:3000",
+                "http://127.0.0.1:5500",
+                "https://gobiznessrocket.com",
+                "https://www.gobiznessrocket.com",
+                "https://gobiznessrocket.co.in",
+                "https://www.gobiznessrocket.co.in",
+            ],
             frameSrc: ["'none'"],
+            // upgrade-insecure-requests is intentionally omitted: it causes browsers
+            // to silently upgrade HTTP fetch() calls to HTTPS, which breaks local dev
+            // (no TLS on localhost) and blocks the /api/contact fetch call with a
+            // CSP violation even though the request is same-origin.
+            upgradeInsecureRequests: NODE_ENV === 'production' ? [] : null,
         }
     },
     crossOriginEmbedderPolicy: false
