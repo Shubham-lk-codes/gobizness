@@ -19,6 +19,13 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const NODE_ENV = process.env.NODE_ENV || 'development';
 
+// Trust the first hop's X-Forwarded-For header so rate limiters key on the
+// real client IP when the app runs behind Vercel, nginx, or any other proxy.
+// Without this, every request appears to come from 127.0.0.1, which means
+// Postman tests and browser submissions share the same rate-limit bucket and
+// exhaust each other's quota.
+app.set('trust proxy', 1);
+
 // ==================== MIDDLEWARE ====================
 
 // Security headers
@@ -32,18 +39,49 @@ app.use(helmet({
             workerSrc: ["'self'"],
             fontSrc: ["'self'", "https://fonts.gstatic.com", "https://cdnjs.cloudflare.com"],
             imgSrc: ["'self'", "data:", "https:", "blob:"],
-            connectSrc: ["'self'"],
+            // Allow same-origin fetch calls (contact form) plus all configured
+            // production domains so the browser never blocks /api/contact.
+            connectSrc: ["'self'", "https://gobiznessrocket.com", "https://www.gobiznessrocket.com", "https://gobiznessrocket.co.in", "https://www.gobiznessrocket.co.in"],
             frameSrc: ["'none'"],
         }
     },
     crossOriginEmbedderPolicy: false
 }));
 
-// CORS
-app.use(cors({
-    origin: process.env.ALLOWED_ORIGINS?.split(',') || ['http://localhost:3000', 'https://www.topdesign.co.in'],
-    credentials: true
-}));
+// Resolve the allowed-origins list from the environment variable, falling back
+// to every known production domain. Keeping 'null' covers file:// origins used
+// during local HTML-only testing without a dev server.
+const allowedOrigins = process.env.ALLOWED_ORIGINS
+    ? process.env.ALLOWED_ORIGINS.split(',').map(o => o.trim()).filter(Boolean)
+    : [
+        'http://localhost:3000',
+        'http://localhost:5500',
+        'http://127.0.0.1:5500',
+        'https://gobiznessrocket.com',
+        'https://www.gobiznessrocket.com',
+        'https://gobiznessrocket.co.in',
+        'https://www.gobiznessrocket.co.in',
+      ];
+
+const corsOptions = {
+    // Allow requests where Origin matches the whitelist OR where no Origin
+    // header is present (same-origin requests from the browser omit it).
+    origin: (origin, callback) => {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error(`CORS: origin '${origin}' not allowed`));
+        }
+    },
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true,
+    optionsSuccessStatus: 204   // IE11 chokes on 204; most browsers are fine
+};
+
+// Handle CORS preflight for every route before any other middleware touches it.
+app.options('*', cors(corsOptions));
+app.use(cors(corsOptions));
 
 // Compression
 app.use(compression({
@@ -75,8 +113,13 @@ app.use('/api/', limiter);
 // Stricter rate limit for contact form
 const contactLimiter = rateLimit({
     windowMs: 60 * 60 * 1000, // 1 hour
-    max: 5, // 5 submissions per hour
-    message: { error: 'Too many contact submissions. Please try again later.' }
+    max: 10, // 10 submissions per IP per hour in production
+    message: { error: 'Too many contact submissions. Please try again later.' },
+    standardHeaders: true,  // send RateLimit-* headers so clients can see quota state
+    legacyHeaders: false,
+    // In development, skip the rate limit entirely so local testing and Postman
+    // calls never consume the quota that the browser form depends on.
+    skip: () => NODE_ENV !== 'production'
 });
 
 // ==================== STATIC FILES ====================
